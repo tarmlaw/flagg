@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bkcvice6hmvlk"
+path="res://.godot/imported/bare knuckled.mp3-dc52fe629462f2d642cee9bd13a2261e.mp3str"
+
+[deps]
+
+source_file="res://music/bare knuckled.mp3"
+dest_files=["res://.godot/imported/bare knuckled.mp3-dc52fe629462f2d642cee9bd13a2261e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

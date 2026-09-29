@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://btikdefb5jye"]
+
+[ext_resource type="Texture2D" uid="uid://ctmqb466epf8n" path="res://debug tex (yellow).png" id="1_egwa1"]
+
+[resource]
+cull_mode = 2
+shading_mode = 2
+albedo_texture = ExtResource("1_egwa1")
+uv1_scale = Vector3(0.125, 0.125, 0.125)
+uv1_triplanar = true
+uv1_world_triplanar = true

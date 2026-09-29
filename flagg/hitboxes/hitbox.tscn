@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://3prid0rmrnm5"]
+
+[ext_resource type="Script" uid="uid://ce7jrktd0bcqc" path="res://hitboxes/hitbox.gd" id="1_tti1o"]
+[ext_resource type="AudioStream" uid="uid://d2dxk1eh1br7x" path="res://music/punch.mp3" id="2_uyor8"]
+
+[node name="hitbox" type="Area3D" unique_id=1887160757]
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_tti1o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1926514660]
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="StartTimer" type="Timer" parent="." unique_id=1219574983]
+one_shot = true
+
+[node name="EndTimer" type="Timer" parent="." unique_id=1159354151]
+one_shot = true
+
+[node name="punch" type="AudioStreamPlayer3D" parent="." unique_id=392361157]
+stream = ExtResource("2_uyor8")
+volume_db = -14.846
+bus = &"SFX"
+
+[connection signal="hit_something" from="." to="." method="_on_hit_something"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]

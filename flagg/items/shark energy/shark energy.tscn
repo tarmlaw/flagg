@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dftbmiuyv0rli"]
+
+[ext_resource type="Script" uid="uid://b158kaordbk4" path="res://items/shark energy/shark_energy.gd" id="1_51fcn"]
+[ext_resource type="PackedScene" uid="uid://bdmqiotilsk27" path="res://items/shark energy/models/shark energy.glb" id="2_i1im1"]
+[ext_resource type="PackedScene" uid="uid://bo38kfi8rdihm" path="res://hitboxes/hurtbox.tscn" id="3_mtn7y"]
+[ext_resource type="Texture2D" uid="uid://c5sbrovlav32g" path="res://items/shark energy/models/Untitled.png" id="3_npx4r"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_j6861"]
+points = PackedVector3Array(0.19999999, 0.78172195, 0, -0.19999999, 0.005964406, -0.39999998, -0.19365078, 0.018278018, 2.7755576e-17, -0.19999999, 0.79403555, -0.39999998, 0.19999999, 0.018278018, -0.39365077, 0.19999999, 0.018278018, 2.7755576e-17, -0.19365078, 0.78172195, 0, 0.19999999, 0.78172195, -0.39365077)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mtn7y"]
+size = Vector3(0.6, 0.7, 0.6)
+
+[node name="shark energy" type="CharacterBody3D" unique_id=1686158965 node_paths=PackedStringArray("coll", "pivot")]
+collision_layer = 2
+script = ExtResource("1_51fcn")
+coll = NodePath("CollisionShape3D")
+item_name = "SHARK ENERGY"
+pivot = NodePath("pivot")
+
+[node name="pivot" type="Node3D" parent="." unique_id=142254628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="shark energy2" parent="pivot" unique_id=344706492 instance=ExtResource("2_i1im1")]
+transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 0, -0.25, 0)
+
+[node name="shark energy" parent="pivot/shark energy2" index="0" unique_id=1963163988]
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="pivot" unique_id=1293425445]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+texture = ExtResource("3_npx4r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1180144917]
+transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 0, 0, 0.125)
+shape = SubResource("ConvexPolygonShape3D_j6861")
+
+[node name="hurtbox" parent="." unique_id=1887160757 instance=ExtResource("3_mtn7y")]
+collision_mask = 4
+
+[node name="CollisionShape3D" parent="hurtbox" index="0" unique_id=1926514660]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24999997, 0)
+shape = SubResource("BoxShape3D_mtn7y")
+
+[editable path="pivot/shark energy2"]
+[editable path="hurtbox"]

@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://y06c4qjk6rrk"]
+
+[ext_resource type="Script" uid="uid://cnvsqbtnpbmi1" path="res://classes/zombie/zombie.gd" id="1_jg8ev"]
+[ext_resource type="Script" uid="uid://cnbgfxo26rtm0" path="res://classes/zombie/states/default.gd" id="3_h7mib"]
+[ext_resource type="Script" uid="uid://cib8mrjy6temo" path="res://classes/zombie/states/hit.gd" id="4_4inyk"]
+[ext_resource type="Script" uid="uid://chh4l3aqaxfqb" path="res://classes/zombie/states/chase.gd" id="4_6divg"]
+[ext_resource type="PackedScene" uid="uid://3prid0rmrnm5" path="res://hitboxes/hitbox.tscn" id="5_8x2u2"]
+[ext_resource type="Material" uid="uid://dejlgsb6f30ki" path="res://debug mat (psx).tres" id="7_vo7ky"]
+[ext_resource type="PackedScene" uid="uid://bo38kfi8rdihm" path="res://hitboxes/hurtbox.tscn" id="8_kuxtw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3wggd"]
+size = Vector3(0.8, 2.3, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_57qwb"]
+size = Vector3(1.2, 2.3, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_56xk7"]
+size = Vector3(1.2, 2.3, 1.2)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6divg"]
+height = 2.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vo7ky"]
+size = Vector3(1.2, 2.3, 1.2)
+
+[node name="zombie" type="CharacterBody3D" unique_id=1912487018 node_paths=PackedStringArray("hurtbox", "status_effect_handler", "state_machine", "kb_timer", "stair_ahead_ray", "stair_below_ray", "nav_agent", "vision_ray", "visibility_notifier", "coll") groups=["enemy", "entity"]]
+collision_layer = 8
+script = ExtResource("1_jg8ev")
+def_max_hp = 1
+def_hp = 1
+hurtbox = NodePath("hurtbox")
+status_effect_handler = NodePath("")
+state_machine = NodePath("states")
+walk_spd = 8.0
+air_spd = 8.5
+kb_timer = NodePath("KnockbackTimer")
+stair_ahead_ray = NodePath("StairAheadRayCast3D")
+stair_below_ray = NodePath("StairBelowRayCast3D")
+nav_agent = NodePath("NavigationAgent3D")
+use_navigation = true
+vision_ray = NodePath("pivot/vision ray")
+visibility_notifier = NodePath("VisibleOnScreenNotifier3D")
+coll = NodePath("CollisionShape3D")
+
+[node name="states" type="Node3D" parent="." unique_id=1876935757]
+
+[node name="default" type="Node3D" parent="states" unique_id=2102518312]
+script = ExtResource("3_h7mib")
+movement_override = true
+use_time = false
+
+[node name="chase" type="Node3D" parent="states" unique_id=1263258121]
+script = ExtResource("4_6divg")
+use_time = false
+
+[node name="hit" type="Node3D" parent="states" unique_id=143194456]
+script = ExtResource("4_4inyk")
+
+[node name="StairAheadRayCast3D" type="RayCast3D" parent="." unique_id=1876924787]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, -1)
+target_position = Vector3(0, -0.55, 0)
+
+[node name="StairBelowRayCast3D" type="RayCast3D" parent="." unique_id=909486115]
+target_position = Vector3(0, -0.75, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1684951559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9802322e-08, 1.15, 2.2351742e-08)
+shape = SubResource("BoxShape3D_3wggd")
+
+[node name="KnockbackTimer" type="Timer" parent="." unique_id=1585695476]
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="." unique_id=300039902]
+one_shot = true
+
+[node name="WallSlideTimer" type="Timer" parent="." unique_id=2021325111]
+one_shot = true
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." unique_id=1306741518]
+aabb = AABB(-0.8, 0, -0.8, 1.6, 2.4, 1.2)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=27673240]
+path_height_offset = 0.5
+simplify_path = true
+avoidance_enabled = true
+radius = 1.0
+
+[node name="hurtbox" parent="." unique_id=1354913638 instance=ExtResource("8_kuxtw")]
+collision_mask = 4
+
+[node name="CollisionShape3D" parent="hurtbox" index="0" unique_id=1926514660]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+shape = SubResource("BoxShape3D_57qwb")
+
+[node name="hitbox" parent="." unique_id=667094186 instance=ExtResource("5_8x2u2")]
+collision_layer = 8
+dmg = 1
+kb = 10.0
+
+[node name="CollisionShape3D" parent="hitbox" index="0" unique_id=1926514660]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+shape = SubResource("BoxShape3D_56xk7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1358372610]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+material_override = ExtResource("7_vo7ky")
+mesh = SubResource("CapsuleMesh_6divg")
+
+[node name="InteractionArea3D" type="Area3D" parent="." unique_id=277760048]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea3D" unique_id=1196297576]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+shape = SubResource("BoxShape3D_vo7ky")
+
+[node name="pivot" type="Node3D" parent="." unique_id=1701159670]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9999999, 0)
+
+[node name="vision ray" type="RayCast3D" parent="pivot" unique_id=1187406412]
+target_position = Vector3(0, 0, -40)
+collision_mask = 4
+
+[connection signal="i_got_a_booboo_ToT" from="." to="." method="_on_i_got_a_booboo_to_t"]
+[connection signal="target_reached" from="NavigationAgent3D" to="states/default" method="_on_navigation_agent_3d_target_reached"]
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
+[connection signal="body_entered" from="InteractionArea3D" to="." method="_on_interaction_area_3d_body_entered"]
+
+[editable path="hurtbox"]
+[editable path="hitbox"]

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://0l1rl2pyrgf1"]
+
+[ext_resource type="Script" uid="uid://cl0sewvglog3d" path="res://UI/UI.gd" id="1_q0uhn"]
+[ext_resource type="Texture2D" uid="uid://cnkyunx04pbev" path="res://UI/healthbar (empty).png" id="3_e707p"]
+[ext_resource type="Shader" uid="uid://cn2huk2qpdiic" path="res://UI/shaders/ps1.gdshader" id="4_e707p"]
+[ext_resource type="Texture2D" uid="uid://cyetk07ona44m" path="res://UI/healthbar.png" id="4_f1fl4"]
+[ext_resource type="Theme" uid="uid://bv1feymlmewia" path="res://fonts/theme.tres" id="5_f1fl4"]
+[ext_resource type="Texture2D" uid="uid://4ex17eqmklyg" path="res://UI/goose/crosshair.png" id="6_d050y"]
+[ext_resource type="Texture2D" uid="uid://todmjicmgqm5" path="res://UI/goose/item slots.png" id="6_jqf55"]
+[ext_resource type="Texture2D" uid="uid://cwhtjato1iyvw" path="res://UI/goose/healthbar.png" id="7_byuxr"]
+[ext_resource type="Texture2D" uid="uid://cukm4o7x2bfxh" path="res://UI/goose/blood overlay.png" id="7_qgmx8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jqf55"]
+shader = ExtResource("4_e707p")
+shader_parameter/color_depth = 4
+shader_parameter/dither_strength = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0a1g2"]
+resource_local_to_scene = true
+shader = ExtResource("4_e707p")
+shader_parameter/color_depth = 5
+shader_parameter/dither_strength = 4
+
+[node name="UI" type="CanvasLayer" unique_id=1778809873]
+script = ExtResource("1_q0uhn")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=76488673]
+visible = false
+offset_right = 800.0
+offset_bottom = 200.0
+scale = Vector2(1, 0.5)
+max_value = 500.0
+texture_under = ExtResource("3_e707p")
+texture_progress = ExtResource("4_f1fl4")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1912076317]
+visible = false
+offset_left = 232.0
+offset_top = 200.0
+offset_right = 304.0
+offset_bottom = 224.0
+texture = ExtResource("6_jqf55")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1319852140]
+visible = false
+offset_left = 8.0
+offset_top = 128.0
+offset_right = 56.0
+offset_bottom = 232.0
+texture = ExtResource("7_byuxr")
+expand_mode = 1
+
+[node name="bloodoverlay" type="TextureRect" parent="." unique_id=1030722664]
+modulate = Color(1, 1, 1, 0)
+offset_right = 320.0
+offset_bottom = 240.0
+texture = ExtResource("7_qgmx8")
+
+[node name="crosshair" type="TextureRect" parent="." unique_id=240658545]
+offset_right = 320.0
+offset_bottom = 240.0
+texture = ExtResource("6_d050y")
+
+[node name="psx shader" type="ColorRect" parent="." unique_id=1476974886]
+material = SubResource("ShaderMaterial_jqf55")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1627178788]
+visible = false
+material = SubResource("ShaderMaterial_0a1g2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InteractionLabel" type="Label" parent="." unique_id=568837787]
+custom_minimum_size = Vector2(320, 12)
+offset_top = 104.0
+offset_right = 320.0
+offset_bottom = 116.0
+theme = ExtResource("5_f1fl4")
+text = "INTERACTION LABEL"
+horizontal_alignment = 1

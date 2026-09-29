@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://dvhy15bx425re"]
+
+[ext_resource type="Script" uid="uid://cw2r5hdjgxbuk" path="res://screens/main_menu.gd" id="1_td6ux"]
+[ext_resource type="Texture2D" uid="uid://bmmogtf7g4s18" path="res://screens/border (1) .png" id="1_tl0qj"]
+[ext_resource type="Texture2D" uid="uid://d3na24lc6qubc" path="res://screens/border (2) .png" id="2_td6ux"]
+[ext_resource type="Texture2D" uid="uid://di83uh1g6msv" path="res://screens/border (3) .png" id="3_c7uke"]
+[ext_resource type="Texture2D" uid="uid://b75ta1qusrjye" path="res://screens/title.png" id="4_n5jj1"]
+[ext_resource type="Texture2D" uid="uid://dj3x1py46a0wm" path="res://screens/play button.png" id="5_pdhp7"]
+[ext_resource type="Texture2D" uid="uid://d2vbvgdbuj2fe" path="res://screens/play button (no focus).png" id="6_n5jj1"]
+[ext_resource type="Texture2D" uid="uid://be07wkrybfyl4" path="res://screens/controls button.png" id="6_s2yvj"]
+[ext_resource type="Theme" uid="uid://bv1feymlmewia" path="res://fonts/theme.tres" id="7_0rpb1"]
+[ext_resource type="Texture2D" uid="uid://bra5tlt3nxd84" path="res://screens/controls button (no focus).png" id="8_pdhp7"]
+[ext_resource type="Shader" uid="uid://dth6u81tfpp6x" path="res://UI/shaders/pixelate.gdshader" id="11_pdhp7"]
+[ext_resource type="Texture2D" uid="uid://by6uv1ynn2va4" path="res://screens/death screen.png" id="12_s2yvj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s2yvj"]
+resource_local_to_scene = true
+shader = ExtResource("11_pdhp7")
+shader_parameter/pixelation = 0.0050000002375
+shader_parameter/opacity = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uohr5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_tl0qj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_td6ux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_c7uke")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="main menu" type="Node2D" unique_id=1549717538]
+script = ExtResource("1_td6ux")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=338959398]
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer" unique_id=67052558]
+visible = false
+material = SubResource("ShaderMaterial_s2yvj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2055127942]
+offset_right = 800.0
+offset_bottom = 600.0
+
+[node name="anim" type="AnimatedSprite2D" parent="." unique_id=1009147286]
+position = Vector2(400, 304)
+sprite_frames = SubResource("SpriteFrames_uohr5")
+frame_progress = 0.4901497
+
+[node name="menu" type="Node2D" parent="." unique_id=1236046455]
+visible = false
+
+[node name="title" type="TextureRect" parent="menu" unique_id=1612865302]
+offset_top = -16.0
+offset_right = 800.0
+offset_bottom = 584.0
+texture = ExtResource("4_n5jj1")
+
+[node name="play" type="TextureButton" parent="menu" unique_id=203618627]
+offset_top = 168.0
+offset_right = 800.0
+offset_bottom = 288.0
+focus_neighbor_top = NodePath("../controls")
+focus_neighbor_bottom = NodePath("../controls")
+focus_next = NodePath("../controls")
+focus_previous = NodePath("../controls")
+texture_normal = ExtResource("6_n5jj1")
+texture_pressed = ExtResource("6_n5jj1")
+texture_focused = ExtResource("5_pdhp7")
+ignore_texture_size = true
+
+[node name="controls" type="TextureButton" parent="menu" unique_id=501582662]
+offset_left = 64.0
+offset_top = 288.0
+offset_right = 864.0
+offset_bottom = 415.0
+focus_neighbor_top = NodePath("../play")
+focus_neighbor_bottom = NodePath("../play")
+focus_next = NodePath("../play")
+focus_previous = NodePath("../play")
+texture_normal = ExtResource("8_pdhp7")
+texture_pressed = ExtResource("8_pdhp7")
+texture_focused = ExtResource("6_s2yvj")
+ignore_texture_size = true
+
+[node name="controls2" type="Node2D" parent="menu" unique_id=1950261589]
+visible = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="menu/controls2" unique_id=1808799673]
+offset_left = 440.0
+offset_top = 232.0
+offset_right = 776.0
+offset_bottom = 584.0
+theme = ExtResource("7_0rpb1")
+theme_override_constants/line_separation = -3
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "wasd or ls: move
+space or a: jump
+lmb or rt: punch
+rmb or lt: block
+shift or b: dodge
+e or x: use item
+mmb or rs: throw
+
+[color=red]enter the arena.
+punch.
+dont get punched."
+fit_content = true
+scroll_active = false
+
+[node name="death" type="Node2D" parent="." unique_id=57693034]
+visible = false
+
+[node name="you suck" type="TextureRect" parent="death" unique_id=631622223]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("12_s2yvj")
+
+[node name="score" type="Label" parent="death" unique_id=2115731838]
+offset_left = 264.0
+offset_top = 496.0
+offset_right = 660.0
+offset_bottom = 544.0
+theme = ExtResource("7_0rpb1")
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 48
+text = "score"
+horizontal_alignment = 2
+clip_text = true
+
+[connection signal="pressed" from="menu/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="menu/controls" to="." method="_on_controls_pressed"]

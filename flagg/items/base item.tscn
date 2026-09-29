@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bp38cxgn32klx"]
+
+[ext_resource type="Script" uid="uid://k0gnfv8dh16p" path="res://items/base item.gd" id="1_kxysu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0u6jx"]
+size = Vector3(0.25, 0.5, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kovwm"]
+size = Vector3(0.25, 0.5, 0.25)
+
+[node name="base item" type="CharacterBody3D" unique_id=1686158965 node_paths=PackedStringArray("pivot")]
+collision_layer = 2
+script = ExtResource("1_kxysu")
+item_name = "Base Item"
+pivot = NodePath("pivot")
+
+[node name="pivot" type="Node3D" parent="." unique_id=142254628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="pivot" unique_id=1054934880]
+mesh = SubResource("BoxMesh_0u6jx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1999750033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_kovwm")
