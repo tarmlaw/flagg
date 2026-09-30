@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://3prid0rmrnm5"]
+
+[ext_resource type="Script" uid="uid://ce7jrktd0bcqc" path="res://UI/hitboxes/hitbox.gd" id="1_tti1o"]
+
+[node name="hitbox" type="Area3D" unique_id=1887160757]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_tti1o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1926514660]
+debug_color = Color(1, 0, 0, 0.41960785)

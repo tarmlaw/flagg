@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://0l1rl2pyrgf1"]
+
+[ext_resource type="Shader" uid="uid://dth6u81tfpp6x" path="res://UI/shaders/pixelate.gdshader" id="1_dhe1o"]
+[ext_resource type="Script" uid="uid://b54j2ijp2gfub" path="res://UI/UI.gd" id="1_q0uhn"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dhe1o"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0a1g2"]
+resource_local_to_scene = true
+shader = ExtResource("1_dhe1o")
+shader_parameter/pixelation = 0.0050000002375
+shader_parameter/opacity = 1.0
+
+[node name="UI" type="CanvasLayer" unique_id=1778809873]
+script = ExtResource("1_q0uhn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1482894088]
+position = Vector2(1440, 159.99997)
+scale = Vector2(0.6249999, 0.6249999)
+texture = SubResource("ViewportTexture_dhe1o")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1627178788]
+material = SubResource("ShaderMaterial_0a1g2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1987787892]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(10, 10)
+theme_override_constants/separation = 0
+
+[node name="healthbar" type="HBoxContainer" parent="HBoxContainer" unique_id=475805027]
+layout_mode = 2
+theme_override_constants/separation = 0
+metadata/_edit_group_ = true
+
+[node name="healthbar2" type="HBoxContainer" parent="HBoxContainer" unique_id=1999575029]
+layout_mode = 2
+theme_override_constants/separation = 0
+metadata/_edit_group_ = true
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1360613937]
+
+[node name="pivot" type="Node3D" parent="SubViewport" unique_id=1570231904]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/pivot" unique_id=143336939]
+transform = Transform3D(-1, 0, 8.940697e-08, 0, 1, 0, -8.940697e-08, 0, -1, 0, 1, -3)
+
+[node name="Label" type="Label" parent="." unique_id=1880940010]
+offset_right = 40.0
+offset_bottom = 23.0

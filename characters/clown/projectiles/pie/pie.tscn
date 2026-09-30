@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://dc0mmht45gpia"]
+
+[ext_resource type="Script" uid="uid://cw5jj6fyb6kbw" path="res://characters/clown/projectiles/pie/pie.gd" id="1_5hf2m"]
+[ext_resource type="PackedScene" uid="uid://3prid0rmrnm5" path="res://UI/hitboxes/hitbox.tscn" id="2_vilr8"]
+[ext_resource type="Texture2D" uid="uid://cuswnioqpjk0l" path="res://characters/clown/projectiles/pie/pie.png" id="3_1sfd4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6gxqo"]
+size = Vector3(0.8, 0.8, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b2hwa"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hfja2"]
+atlas = ExtResource("3_1sfd4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mb8d5"]
+atlas = ExtResource("3_1sfd4")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10m75"]
+atlas = ExtResource("3_1sfd4")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3tui"]
+atlas = ExtResource("3_1sfd4")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5hf2m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hfja2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb8d5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10m75")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3tui")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="pie" type="CharacterBody3D" unique_id=390715950 node_paths=PackedStringArray("death_timer", "coll", "hitbox", "anim")]
+collision_layer = 8
+script = ExtResource("1_5hf2m")
+lifetime = 5.0
+death_timer = NodePath("DeathTimer")
+coll = NodePath("CollisionShape3D")
+hitbox = NodePath("hitbox")
+spd = 10.0
+anim = NodePath("anim")
+
+[node name="hitbox" parent="." unique_id=1887160757 instance=ExtResource("2_vilr8")]
+collision_layer = 8
+inflict_spd = true
+spd_time = 0.5
+spd = -0.75
+
+[node name="CollisionShape3D" parent="hitbox" index="0" unique_id=1926514660]
+shape = SubResource("BoxShape3D_6gxqo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1319816392]
+shape = SubResource("BoxShape3D_b2hwa")
+
+[node name="anim" type="AnimatedSprite3D" parent="." unique_id=958903842]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+pixel_size = 0.015
+billboard = 1
+shaded = true
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_5hf2m")
+frame_progress = 0.5776934
+
+[node name="DeathTimer" type="Timer" parent="." unique_id=1026841008]
+
+[editable path="hitbox"]

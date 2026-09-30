@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://j73a6u1ujv2j"]
+
+[ext_resource type="Script" uid="uid://cu4m1xmo8drx" path="res://scenes/sandbox/sandbox.gd" id="1_mecjc"]
+[ext_resource type="FontFile" uid="uid://x3fdbsf1700n" path="res://UI/fonts/dungeon-mode.ttf" id="2_3gy6f"]
+[ext_resource type="Material" uid="uid://dtdn3iv8r8s3b" path="res://UI/sprites/sandbox.tres" id="3_hwrqe"]
+[ext_resource type="Texture2D" uid="uid://dc8m0rroducqe" path="res://pentagram.png" id="4_ge8bb"]
+[ext_resource type="PackedScene" uid="uid://dftbmiuyv0rli" path="res://items/shark energy/shark energy.tscn" id="4_nh68t"]
+[ext_resource type="PackedScene" uid="uid://3prid0rmrnm5" path="res://UI/hitboxes/hitbox.tscn" id="5_nh68t"]
+[ext_resource type="PackedScene" uid="uid://bw0nnq46qt0f1" path="res://items/flag/flag.tscn" id="6_hwrqe"]
+
+[sub_resource type="Environment" id="Environment_3gy6f"]
+ambient_light_source = 2
+ambient_light_color = Color(0.505344, 0.3866624, 1, 1)
+glow_enabled = true
+glow_strength = 0.5
+glow_blend_mode = 4
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.125
+volumetric_fog_albedo = Color(0.46666667, 0.29411766, 1, 1)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_7du5g"]
+agent_height = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nh68t"]
+
+[node name="sandbox" type="Node3D" unique_id=627438671]
+script = ExtResource("1_mecjc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1558051777]
+
+[node name="host" type="Button" parent="CanvasLayer" unique_id=436513514]
+offset_left = 1464.0
+offset_right = 1600.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("2_3gy6f")
+theme_override_font_sizes/font_size = 36
+text = "host"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=948862852]
+environment = SubResource("Environment_3gy6f")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1613094233]
+transform = Transform3D(-1, 1.509958e-07, 6.600236e-15, 0, -4.371139e-08, 1, 1.509958e-07, 1, 4.371139e-08, 0, 0, 0)
+directional_shadow_mode = 0
+sky_mode = 2
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=881872050]
+navigation_mesh = SubResource("NavigationMesh_7du5g")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=1330102924]
+use_collision = true
+
+[node name="ground" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=393404512]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+size = Vector3(100, 1, 100)
+material = ExtResource("3_hwrqe")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=294934525]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3, 0)
+size = Vector3(2, 6, 10)
+material = ExtResource("3_hwrqe")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=195874648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 7, -8)
+size = Vector3(2, 2, 2)
+material = ExtResource("3_hwrqe")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=788309285]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 9, -12)
+size = Vector3(2, 2, 2)
+material = ExtResource("3_hwrqe")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1609353074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 11, -16)
+size = Vector3(2, 2, 2)
+material = ExtResource("3_hwrqe")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1020851458]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, 7)
+size = Vector3(2, 4, 4)
+material = ExtResource("3_hwrqe")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=2014242148]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, 11)
+size = Vector3(2, 2, 4)
+material = ExtResource("3_hwrqe")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=531526785]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, 0)
+operation = 2
+size = Vector3(2, 4, 2)
+material = ExtResource("3_hwrqe")
+
+[node name="Camera3D2" type="Camera3D" parent="." unique_id=1043350826]
+transform = Transform3D(0.7071068, -0.35355338, 0.61237246, 0, 0.8660254, 0.50000006, -0.7071068, -0.35355338, 0.61237246, 15, 25, 15)
+current = true
+fov = 30.0
+
+[node name="Decal" type="Decal" parent="." unique_id=2096917098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 0)
+size = Vector3(6, 0.001, 6)
+texture_albedo = ExtResource("4_ge8bb")
+emission_energy = 16.0
+modulate = Color(1, 0, 0, 1)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=691929075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0)
+light_color = Color(1, 0, 0, 1)
+omni_range = 24.0
+
+[node name="shark energy" parent="." unique_id=1686158965 instance=ExtResource("4_nh68t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="hitbox" parent="." unique_id=1887160757 instance=ExtResource("5_nh68t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, -11)
+beacon = 1
+
+[node name="CollisionShape3D" parent="hitbox" index="0" unique_id=1926514660]
+shape = SubResource("BoxShape3D_nh68t")
+
+[node name="flag" parent="." unique_id=1690564026 instance=ExtResource("6_hwrqe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -12)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=634020241]
+_spawnable_scenes = PackedStringArray("uid://cvnh4k0lvohpd")
+spawn_path = NodePath("..")
+
+[connection signal="pressed" from="CanvasLayer/host" to="." method="_on_host_pressed"]
+[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
+
+[editable path="hitbox"]

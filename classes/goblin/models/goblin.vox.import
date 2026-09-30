@@ -1,0 +1,17 @@
+[remap]
+
+importer="MagicaVoxel.With.Extensions.To.MeshLibrary"
+type="MeshLibrary"
+uid="uid://s42exlwnprx7"
+path="res://.godot/imported/goblin.vox-606edd382916ceba8e1facd2b632ed24.meshlib"
+
+[deps]
+
+source_file="res://classes/goblin/models/goblin.vox"
+dest_files=["res://.godot/imported/goblin.vox-606edd382916ceba8e1facd2b632ed24.meshlib"]
+
+[params]
+
+Scale=0.1
+GreedyMeshGenerator=true
+SnapToGround=false

@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://c5jmukkq5sony"]
+
+[ext_resource type="Script" uid="uid://cy7jagejdp0lt" path="res://characters/skeleton/projectiles/bone/bone.gd" id="1_58afd"]
+[ext_resource type="Texture2D" uid="uid://dc38usb5ia68l" path="res://characters/skeleton/projectiles/bone/bone.png" id="2_6gxqo"]
+[ext_resource type="PackedScene" uid="uid://3prid0rmrnm5" path="res://UI/hitboxes/hitbox.tscn" id="3_6gxqo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6gxqo"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b2hwa"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2hwa"]
+atlas = ExtResource("2_6gxqo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ms5or"]
+atlas = ExtResource("2_6gxqo")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k7g3a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2hwa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ms5or")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="bone" type="CharacterBody3D" unique_id=390715950 node_paths=PackedStringArray("death_timer", "coll", "hitbox", "anim")]
+collision_layer = 8
+script = ExtResource("1_58afd")
+death_timer = NodePath("DeathTimer")
+coll = NodePath("CollisionShape3D")
+hitbox = NodePath("hitbox")
+anim = NodePath("anim")
+
+[node name="hitbox" parent="." unique_id=1887160757 instance=ExtResource("3_6gxqo")]
+collision_layer = 8
+dmg = 1
+
+[node name="CollisionShape3D" parent="hitbox" index="0" unique_id=1926514660]
+shape = SubResource("BoxShape3D_6gxqo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1319816392]
+shape = SubResource("BoxShape3D_b2hwa")
+
+[node name="anim" type="AnimatedSprite3D" parent="." unique_id=958903842]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+pixel_size = 0.015
+billboard = 1
+shaded = true
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_k7g3a")
+frame_progress = 0.35126245
+
+[node name="DeathTimer" type="Timer" parent="." unique_id=1026841008]
+
+[editable path="hitbox"]

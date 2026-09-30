@@ -1,9 +1,0 @@
-[gd_scene format=3 uid="uid://rdf0j8inrlp0"]
-
-[ext_resource type="Script" uid="uid://cgocllhwriid1" path="res://UI/status_effect_handler.gd" id="1_kjccp"]
-
-[node name="status effect handler" type="Node3D" unique_id=1694662803]
-script = ExtResource("1_kjccp")
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=2002026346]
-spawn_path = NodePath("..")

@@ -1,0 +1,346 @@
+[gd_scene format=3 uid="uid://dsheag3gojywv"]
+
+[ext_resource type="Script" uid="uid://dqs34bi07t2qn" path="res://characters/toy rat/toy rat.gd" id="1_mt33d"]
+[ext_resource type="Script" uid="uid://dxqe2il2wwwgq" path="res://characters/toy rat/states/default.gd" id="2_mt33d"]
+[ext_resource type="PackedScene" uid="uid://3prid0rmrnm5" path="res://UI/hitboxes/hitbox.tscn" id="3_i0t5b"]
+[ext_resource type="PackedScene" uid="uid://bo38kfi8rdihm" path="res://UI/hitboxes/hurtbox.tscn" id="4_kq8q3"]
+[ext_resource type="Texture2D" uid="uid://ixwvkaxl28hl" path="res://characters/toy rat/sprites/run.png" id="5_mt33d"]
+[ext_resource type="Texture2D" uid="uid://byb7874opusus" path="res://characters/toy rat/sprites/run b.png" id="6_vm65e"]
+[ext_resource type="Texture2D" uid="uid://wqmjh82pxlvr" path="res://characters/toy rat/sprites/run s.png" id="7_kygdt"]
+[ext_resource type="PackedScene" uid="uid://0l1rl2pyrgf1" path="res://UI/UI.tscn" id="8_syq1c"]
+[ext_resource type="Shader" uid="uid://dth6u81tfpp6x" path="res://UI/shaders/pixelate.gdshader" id="9_ipjje"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nid26"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_whehy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6s2vc"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ymx43"]
+size = Vector3(0.8, 0.6, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8mj1o"]
+size = Vector3(0.8, 1, 0.8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqyep"]
+atlas = ExtResource("5_mt33d")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_845h5"]
+atlas = ExtResource("6_vm65e")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8gk6"]
+atlas = ExtResource("7_kygdt")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4twk"]
+atlas = ExtResource("5_mt33d")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_toyxw"]
+atlas = ExtResource("5_mt33d")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ifs1"]
+atlas = ExtResource("5_mt33d")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i20ry"]
+atlas = ExtResource("5_mt33d")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsf23"]
+atlas = ExtResource("5_mt33d")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cipfk"]
+atlas = ExtResource("5_mt33d")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgf8g"]
+atlas = ExtResource("6_vm65e")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3if5j"]
+atlas = ExtResource("6_vm65e")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0qob"]
+atlas = ExtResource("6_vm65e")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5yu1"]
+atlas = ExtResource("6_vm65e")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6auyl"]
+atlas = ExtResource("6_vm65e")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_no8sq"]
+atlas = ExtResource("6_vm65e")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50drv"]
+atlas = ExtResource("7_kygdt")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_beqcx"]
+atlas = ExtResource("7_kygdt")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqrgn"]
+atlas = ExtResource("7_kygdt")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3lt2"]
+atlas = ExtResource("7_kygdt")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1gkt"]
+atlas = ExtResource("7_kygdt")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rt3lq"]
+atlas = ExtResource("7_kygdt")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u8tuc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqyep")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_845h5")
+}],
+"loop": true,
+"name": &"idle b",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8gk6")
+}],
+"loop": true,
+"name": &"idle s",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_e4twk")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_toyxw")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_1ifs1")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_i20ry")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_jsf23")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_cipfk")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_wgf8g")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_3if5j")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_g0qob")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_w5yu1")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_6auyl")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_no8sq")
+}],
+"loop": true,
+"name": &"run b",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_50drv")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_beqcx")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_xqrgn")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_k3lt2")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_t1gkt")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_rt3lq")
+}],
+"loop": true,
+"name": &"run s",
+"speed": 8.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vm65e"]
+resource_local_to_scene = true
+shader = ExtResource("9_ipjje")
+shader_parameter/pixelation = 0.0050000002375
+shader_parameter/opacity = 1.0
+
+[node name="toy rat" type="CharacterBody3D" unique_id=431695664 node_paths=PackedStringArray("pivot", "tps_camera", "if_timer", "hurtbox", "state_machine", "item_holder", "interaction_area", "knockback_timer", "stair_ahead_ray", "stair_below_ray", "nav_agent", "coll", "anim", "vis", "aud") groups=["entity"]]
+collision_layer = 8
+script = ExtResource("1_mt33d")
+pivot = NodePath("pivot")
+tps_camera = NodePath("pivot/SpringArm3D/Camera3D")
+max_hp = 2
+hp = 2
+if_timer = NodePath("IFTimer")
+hurtbox = NodePath("hurtbox")
+state_machine = NodePath("states")
+item_holder = NodePath("item holder")
+interaction_area = NodePath("InteractionArea3D")
+can_pick_up = false
+walk_spd = 3.0
+air_spd = 5.0
+knockback_timer = NodePath("KnockbackTimer")
+stair_ahead_ray = NodePath("StairAheadRayCast3D")
+stair_below_ray = NodePath("StairBelowRayCast3D")
+nav_agent = NodePath("NavigationAgent3D")
+use_navigation = true
+coll = NodePath("CollisionShape3D")
+anim = NodePath("anim")
+facing = 0
+vis = NodePath("VisibleOnScreenNotifier3D")
+aud = NodePath("AudioListener3D")
+
+[node name="states" type="Node3D" parent="." unique_id=1275888657]
+
+[node name="default" type="Node3D" parent="states" unique_id=1695912270]
+script = ExtResource("2_mt33d")
+
+[node name="pivot" type="Node3D" parent="." unique_id=208370412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="pivot" unique_id=1568553606]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 0, 0)
+spring_length = 3.0
+margin = 0.5
+
+[node name="Camera3D" type="Camera3D" parent="pivot/SpringArm3D" unique_id=1528460671]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881904, 0, 0.25881904, 0.9659258, 0, 0, 0)
+
+[node name="item holder" type="Node3D" parent="." unique_id=425413187]
+transform = Transform3D(0.9914449, -0.13052619, 0, 0.13012382, 0.9883885, 0.0784591, -0.010240969, -0.07778787, 0.99691725, 0, 1, 0)
+
+[node name="InteractionArea3D" type="Area3D" parent="." unique_id=2034429237]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea3D" unique_id=442422820]
+shape = SubResource("BoxShape3D_nid26")
+
+[node name="TeleportArea3D" type="Area3D" parent="." unique_id=1594753453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
+monitoring = false
+metadata/teleportable_root = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TeleportArea3D" unique_id=434002366]
+shape = SubResource("CapsuleShape3D_whehy")
+
+[node name="StairAheadRayCast3D" type="RayCast3D" parent="." unique_id=737218583]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, -1)
+target_position = Vector3(0, -0.55, 0)
+
+[node name="StairBelowRayCast3D" type="RayCast3D" parent="." unique_id=563648711]
+target_position = Vector3(0, -0.75, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=234367117]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("BoxShape3D_6s2vc")
+
+[node name="hitbox" parent="." unique_id=1887160757 instance=ExtResource("3_i0t5b")]
+collision_layer = 8
+dmg = 1
+kb = 3.0
+inflict_bleed = true
+bleed_time = 0.5
+
+[node name="CollisionShape3D" parent="hitbox" index="0" unique_id=1926514660]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4901161e-08, 0.3, 0)
+shape = SubResource("BoxShape3D_ymx43")
+
+[node name="hurtbox" parent="." unique_id=1386972131 instance=ExtResource("4_kq8q3")]
+collision_mask = 4
+
+[node name="CollisionShape3D" parent="hurtbox" index="0" unique_id=1926514660]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9802322e-08, 0.3, 2.9802322e-08)
+shape = SubResource("BoxShape3D_8mj1o")
+
+[node name="anim" type="AnimatedSprite3D" parent="." unique_id=145040476]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0.8, 0)
+pixel_size = 0.02
+billboard = 2
+shaded = true
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_u8tuc")
+animation = &"idle b"
+
+[node name="IFTimer" type="Timer" parent="." unique_id=1228182217]
+one_shot = true
+
+[node name="KnockbackTimer" type="Timer" parent="." unique_id=1329067116]
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="." unique_id=1300835200]
+one_shot = true
+
+[node name="WallSlideTimer" type="Timer" parent="." unique_id=146573119]
+one_shot = true
+
+[node name="ExplosionTimer" type="Timer" parent="." unique_id=751180920]
+one_shot = true
+
+[node name="AudioListener3D" type="AudioListener3D" parent="." unique_id=264920311]
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." unique_id=498206500]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+aabb = AABB(-0.5, -0.5, -0.5, 1, 1, 1)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=781703489]
+avoidance_enabled = true
+
+[node name="UI" parent="." unique_id=1778809873 instance=ExtResource("8_syq1c")]
+
+[node name="ColorRect" parent="UI" index="1" unique_id=1627178788]
+material = SubResource("ShaderMaterial_vm65e")
+
+[connection signal="timeout" from="ExplosionTimer" to="." method="_on_explosion_timer_timeout"]
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
+
+[editable path="hitbox"]
+[editable path="hurtbox"]
+[editable path="UI"]

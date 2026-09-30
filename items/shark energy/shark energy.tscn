@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dftbmiuyv0rli"]
+
+[ext_resource type="Script" uid="uid://b158kaordbk4" path="res://items/shark energy/shark_energy.gd" id="1_51fcn"]
+[ext_resource type="PackedScene" uid="uid://bdmqiotilsk27" path="res://items/shark energy/models/shark energy.glb" id="2_i1im1"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_j6861"]
+points = PackedVector3Array(0.19999999, 0.78172195, 0, -0.19999999, 0.005964406, -0.39999998, -0.19365078, 0.018278018, 2.7755576e-17, -0.19999999, 0.79403555, -0.39999998, 0.19999999, 0.018278018, -0.39365077, 0.19999999, 0.018278018, 2.7755576e-17, -0.19365078, 0.78172195, 0, 0.19999999, 0.78172195, -0.39365077)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_51fcn"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="shark energy" type="CharacterBody3D" unique_id=1686158965 node_paths=PackedStringArray("coll", "pivot")]
+collision_layer = 2
+script = ExtResource("1_51fcn")
+coll = NodePath("CollisionShape3D")
+item_name = "SHARK ENERGY"
+pivot = NodePath("pivot")
+
+[node name="pivot" type="Node3D" parent="." unique_id=142254628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="shark energy2" parent="pivot" unique_id=344706492 instance=ExtResource("2_i1im1")]
+transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 0, -0.25, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1180144917]
+transform = Transform3D(0.625, 0, 0, 0, 0.625, 0, 0, 0, 0.625, 0, 0, 0.125)
+shape = SubResource("ConvexPolygonShape3D_j6861")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=865859633]
+replication_config = SubResource("SceneReplicationConfig_51fcn")
+
+[editable path="pivot/shark energy2"]

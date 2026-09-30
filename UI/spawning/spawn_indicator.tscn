@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://crd88fq7c1jy6"]
+
+[ext_resource type="Texture2D" uid="uid://drvtuvyg5e280" path="res://UI/sprites/spawn indicator.png" id="1_3sw6o"]
+
+[node name="spawn indicator" type="Decal" unique_id=137471047]
+size = Vector3(1, 1, 1)
+texture_albedo = ExtResource("1_3sw6o")
