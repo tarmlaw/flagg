@@ -27,6 +27,7 @@ func init_player(player: BaseClass):
 
 func _on_host_pressed() -> void:
 	Net.host_lobby()
+	Net.send_packet(0, {"message": "hosting lobby"})
 
 func _on_multiplayer_spawner_spawned(node: Node) -> void:
 	if node is BaseClass:
