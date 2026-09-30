@@ -1,9 +1,12 @@
 extends Node
 
 var steam_id: int = 0: set = set_steam_id
-var steam_name
+var steam_name: String = ""
 var steam_avatar
 
+
+func _ready() -> void:
+	steam_name = Steam.getPersonaName()
 
 func set_steam_id(new_id: int):
 	steam_id = new_id
@@ -11,6 +14,7 @@ func set_steam_id(new_id: int):
 	if !is_node_ready(): await ready
 	
 	steam_name = Steam.getPersonaName()
+	print(steam_name)
 	#steam_avatar = Steam.getPlayerAvatar(2, steam_id)
 
 func spawn(scene: BaseController, target, amount = 1):

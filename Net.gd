@@ -55,6 +55,8 @@ func _on_lobby_joined(id: int, permissions: int, locked: bool, response: int) ->
 		handshake()
 
 func _on_join_requested(id: int, steam_id: int) -> void:
+	var friend_user_name: String = Steam.getFriendPersonaName(steam_id)
+	print_rich("[color=green][NET][/color] joining lobby with %s" % friend_user_name)
 	Steam.joinLobby(id)
 	lobby_id = id
 
@@ -80,7 +82,7 @@ func check_command_line():
 
 #region PACKETS
 func handshake():
-	send_packet(0, {"message": "handshake", "user_id": Global.user_id, "user_name": Global.user_name})
+	send_packet(0, {"message": "handshake", "user_id": Global.steam_id, "user_name": Global.steam_name})
 
 func read_packets(read_count: int = 0):
 	if read_count >= packet_read_limit: return
@@ -156,8 +158,8 @@ func send_packet(target: int, packet_data: Dictionary):
 	if target == 0:
 		if lobby_members.size() > 1:
 			for member in lobby_members:
-				if member["steam_id"] != Global.steam_id:
-					Steam.sendP2PPacket(member["steam_id"], data, send_type, channel)
+				if member["user_id"] != Global.steam_id:
+					Steam.sendP2PPacket(member["user_id"], data, send_type, channel)
 	else: Steam.sendP2PPacket(target, data, send_type, channel)
 
 func _on_p2p_session_request(remote_id: int) -> void:

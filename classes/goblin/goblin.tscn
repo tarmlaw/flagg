@@ -109,6 +109,15 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath("model/Armature/Skeleton3D/LookAtModifier3D:target_node")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath(".:hp")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath(".:shield")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath(".:decay")
+properties/8/spawn = true
+properties/8/replication_mode = 1
 
 [node name="goblin" type="CharacterBody3D" unique_id=1912487018 node_paths=PackedStringArray("pivot", "camera", "look_at_mod", "ui", "hurtbox", "status_effect_handler", "state_machine", "item_holder", "interaction_area", "knockback_timer", "stair_ahead_ray", "stair_below_ray", "nav_agent", "anim", "audio_listener", "meshes_to_hide", "visibility_notifier", "coll", "debug_label") groups=["entity"]]
 collision_layer = 4
