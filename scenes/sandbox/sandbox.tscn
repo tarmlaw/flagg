@@ -4,9 +4,7 @@
 [ext_resource type="FontFile" uid="uid://x3fdbsf1700n" path="res://UI/fonts/dungeon-mode.ttf" id="2_3gy6f"]
 [ext_resource type="Material" uid="uid://dtdn3iv8r8s3b" path="res://UI/sprites/sandbox.tres" id="3_hwrqe"]
 [ext_resource type="Texture2D" uid="uid://dc8m0rroducqe" path="res://pentagram.png" id="4_ge8bb"]
-[ext_resource type="PackedScene" uid="uid://dftbmiuyv0rli" path="res://items/shark energy/shark energy.tscn" id="4_nh68t"]
 [ext_resource type="PackedScene" uid="uid://3prid0rmrnm5" path="res://UI/hitboxes/hitbox.tscn" id="5_nh68t"]
-[ext_resource type="PackedScene" uid="uid://bw0nnq46qt0f1" path="res://items/flag/flag.tscn" id="6_hwrqe"]
 
 [sub_resource type="Environment" id="Environment_3gy6f"]
 ambient_light_source = 2
@@ -108,18 +106,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, 0)
 light_color = Color(1, 0, 0, 1)
 omni_range = 24.0
 
-[node name="shark energy" parent="." unique_id=1686158965 instance=ExtResource("4_nh68t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
-
 [node name="hitbox" parent="." unique_id=1887160757 instance=ExtResource("5_nh68t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, -11)
 beacon = 1
 
 [node name="CollisionShape3D" parent="hitbox" index="0" unique_id=1926514660]
 shape = SubResource("BoxShape3D_nh68t")
-
-[node name="flag" parent="." unique_id=1690564026 instance=ExtResource("6_hwrqe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -12)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=634020241]
 _spawnable_scenes = PackedStringArray("uid://cvnh4k0lvohpd")
