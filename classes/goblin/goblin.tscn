@@ -118,11 +118,11 @@ properties/7/replication_mode = 1
 properties/8/path = NodePath(".:decay")
 properties/8/spawn = true
 properties/8/replication_mode = 1
-properties/9/path = NodePath(".:object")
+properties/9/path = NodePath(".:item")
 properties/9/spawn = true
 properties/9/replication_mode = 1
 
-[node name="goblin" type="CharacterBody3D" unique_id=1912487018 node_paths=PackedStringArray("pivot", "camera", "look_at_mod", "ui", "hurtbox", "status_effect_handler", "state_machine", "item_holder", "interaction_area", "knockback_timer", "stair_ahead_ray", "stair_below_ray", "nav_agent", "anim", "audio_listener", "meshes_to_hide", "visibility_notifier", "coll", "debug_label") groups=["entity"]]
+[node name="goblin" type="CharacterBody3D" unique_id=1912487018 node_paths=PackedStringArray("pivot", "camera", "look_at_mod", "ui", "hurtbox", "status_effect_handler", "state_machine", "item_holder", "interaction_area", "knockback_timer", "stair_ahead_ray", "stair_below_ray", "nav_agent", "anim", "audio_listener", "meshes_to_hide", "visibility_notifier", "coll", "mp_spawner", "debug_label") groups=["entity"]]
 collision_layer = 4
 script = ExtResource("1_hq7ua")
 pivot = NodePath("pivot")
@@ -143,6 +143,7 @@ audio_listener = NodePath("AudioListener3D")
 meshes_to_hide = [NodePath("model/Armature/Skeleton3D/goblin")]
 visibility_notifier = NodePath("VisibleOnScreenNotifier3D")
 coll = NodePath("CollisionShape3D")
+mp_spawner = NodePath("MultiplayerSpawner")
 debug_label = NodePath("DebugLabel")
 
 [node name="status effect handler" parent="." unique_id=180515552 node_paths=PackedStringArray("hurtbox") instance=ExtResource("2_awgpw")]
@@ -350,6 +351,10 @@ font_size = 36
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=287614255]
 replication_config = SubResource("SceneReplicationConfig_awgpw")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1486296832]
+spawn_path = NodePath("../model/Armature/Skeleton3D/BoneAttachment3D/item holder")
+spawn_limit = 1
 
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
 

@@ -181,6 +181,9 @@ var nav_dir: Vector2 = Vector2.ZERO
 @export var coll: CollisionShape3D
 @export var death_poof_scale: Vector3 = Vector3(0.3, 0.3, 0.3)
 
+#multiplayer shit
+@export var mp_spawner: MultiplayerSpawner
+
 #debug shit
 @export var can_display_debug: bool = false
 @export var debug_label: Label
@@ -404,9 +407,11 @@ func handle_interaction():
 	if !item and interaction_area.has_overlapping_bodies():
 		if interaction_area.get_overlapping_bodies().front() is BaseItem:
 			i_data.clear()
+			mp_spawner.clear_spawnable_scenes()
 			
 			var body = interaction_area.get_overlapping_bodies().front()
 			var body_path = body.get_scene_file_path()
+			mp_spawner.add_spawnable_scene(body_path)
 			body.pick_up(self)
 			
 			await !i_data.is_empty()
@@ -453,6 +458,8 @@ func drop_object(throw: bool = false):
 		new_item.throw(-camera.global_transform.basis.z * throw_force)
 		await get_tree().create_timer(0.25).timeout
 		interaction_area.get_child(0).disabled = false
+	
+	mp_spawner.clear_spawnable_scenes()
 
 func throw():
 	interaction_area.get_child(0).disabled = true
