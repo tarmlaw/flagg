@@ -5,14 +5,20 @@ class_name BaseItem
 
 # ITEM
 @export_category("Item")
-@export var item_name: String
+@export var item_name: String:
+	set = s_item_name
 
 @export_group("Use")
-@export var max_uses: int = 1
-var uses: int = 0
+@export var max_uses: int = 1:
+	set = s_max_uses
+
+var uses: int = 0:
+	set = s_uses
 
 @export var delete_on_use: bool = true
 
+@export var i_data: Dictionary #only use variable with a SET function (item name, max uses, uses)
+var item_holder = null
 
 # MOVEMENT
 @export_category("Movement")
@@ -24,7 +30,6 @@ var uses: int = 0
 @export var grv: float = 20.0
 @export var ignore_gravity: bool = false
 @export var ignore_gravity_when_dropped: bool = false
-
 
 # VISUALS
 @export_category("Visuals")
@@ -38,13 +43,16 @@ var uses: int = 0
 
 
 func _process(delta: float) -> void:
-	if delete_on_use and uses >= max_uses: queue_free()
+	if delete_on_use and uses >= max_uses:
+		if is_held():
+			item_holder.item = null
+			item_holder.i_data.clear()
+		queue_free()
 	
 	handle_rotation(delta)
 
 func _physics_process(delta: float) -> void:
-	#disable coll when held
-	if get_parent() != get_tree().current_scene: coll.disabled = true
+	if is_held(): coll.disabled = true
 	else: coll.disabled = false
 	
 	handle_decceleration(delta)
@@ -52,11 +60,21 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+func is_held() -> bool:
+	if item_holder != null: return true
+	else: return false
+
 func pick_up(picked_up_by):
 	ignore_gravity = true
+	print(picked_up_by)
+	item_holder = picked_up_by
 	
-	reparent(picked_up_by.item_holder, false)
-	picked_up_by.object = self
+	#reparent(picked_up_by.item_holder, false)
+	
+	await is_held()
+	
+	update_i_data(i_data)
+	queue_free()
 
 func use(controller: Node3D):
 	uses += 1
@@ -67,7 +85,7 @@ func throw(throw_dir: Vector3):
 	velocity.y += grv * 0.25
 
 func handle_decceleration(delta):
-	if get_parent() == get_tree().current_scene: #checks if the item's not being held
+	if !is_held():
 		velocity.x = move_toward(velocity.x, 0, get_deccel() * delta)
 		velocity.z = move_toward(velocity.z, 0, get_deccel() * delta)
 
@@ -85,9 +103,38 @@ func handle_gravity(delta):
 func handle_rotation(delta):
 	if pivot == null: return
 	
-	if !use_rotation or (!use_rotation_when_held and get_parent() != get_tree().current_scene):
+	if !use_rotation or (!use_rotation_when_held and is_held()):
 		pivot.rotation_degrees = def_rotation
 		return
 	
 	pivot.rotation_degrees.y += (1 * delta * spin_mult)
 	pivot.rotation_degrees.z = z_rotation
+
+#region item data
+func update_i_data(new_data: Dictionary) -> Dictionary:
+	print(new_data)
+	i_data.merge(new_data, true)
+	
+	await is_held()
+	
+	if is_held():
+		item_holder.i_data = i_data
+		print("merging %s with %s" % [new_data, i_data])
+	return i_data
+
+func s_item_name(value: String) -> void:
+	if item_name != value:
+		item_name = value
+	update_i_data({"item_name": item_name})
+
+func s_max_uses(value: int) -> void:
+	if max_uses != value:
+		max_uses = value
+	update_i_data({"max_uses": max_uses})
+
+func s_uses(value: int) -> void:
+	if uses != value:
+		uses = value
+	update_i_data({"uses": uses})
+
+#endregion

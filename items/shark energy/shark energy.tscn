@@ -31,6 +31,12 @@ collision_layer = 2
 script = ExtResource("1_51fcn")
 coll = NodePath("CollisionShape3D")
 item_name = "SHARK ENERGY"
+max_uses = 2
+i_data = {
+"item_name": "SHARK ENERGY",
+"max_uses": 2,
+"uses": 0
+}
 pivot = NodePath("pivot")
 
 [node name="pivot" type="Node3D" parent="." unique_id=142254628]

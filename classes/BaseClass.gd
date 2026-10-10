@@ -83,7 +83,9 @@ var current_state: Node
 @export var follow_distance: float = 1.5
 @export var max_interaction_distance: float = 5.0
 var drop: bool = false
-var object: BaseItem = null
+var item: BaseItem = null
+var i_data: Dictionary = {}
+
 
 @export var can_pick_up: bool = true
 
@@ -224,6 +226,7 @@ func _input(event: InputEvent) -> void:
 		pivot.rotate_x(deg_to_rad(-event.relative.y * mouse_sens_v))
 
 func _process(delta: float) -> void:
+	#print("data: %s" % i_data)
 	#debug
 	display_debug()
 	
@@ -394,42 +397,66 @@ func change_state(new_state: String):
 
 func handle_interaction():
 	if !can_pick_up:
-		if object: throw()
+		if item: throw()
 		return
 	
 	# item pick up
-	if !object and interaction_area.has_overlapping_bodies():
+	if !item and interaction_area.has_overlapping_bodies():
 		if interaction_area.get_overlapping_bodies().front() is BaseItem:
+			i_data.clear()
+			
 			var body = interaction_area.get_overlapping_bodies().front()
+			var body_path = body.get_scene_file_path()
 			body.pick_up(self)
+			
+			await !i_data.is_empty()
+			
+			var new_item = load(body_path).instantiate() as BaseItem
+			item_holder.add_child(new_item, true)
+			item = new_item
+			item.item_holder = self
+			
+			for i in i_data:
+				if item.i_data.has(i):
+					item.i_data[i] = i_data[i]
+			
 			ui.display_text(str("PICKED UP ", body.item_name))
 	
-	if object: object.position = Vector3.ZERO
+	if item: item.position = Vector3.ZERO
 	
 	#use item in hand
 	if is_multiplayer_authority() and Input.is_action_just_pressed("interact"):
-		if object and object.has_method("use"):
-			object.use(self)
+		if item and item.has_method("use"):
+			item.use(self)
 	
 	#throw
 	if is_multiplayer_authority() and Input.is_action_just_pressed("throw"):
-		if object:
+		if item:
 			throw()
 
-func drop_object():
-	object.position.x = -item_holder.position.x
-	object.reparent(get_tree().current_scene, true)
-	object.rotation_degrees = Vector3.ZERO
-	object = null
+func drop_object(throw: bool = false):
+	var item_path = item.get_scene_file_path()
+	var new_item = load(item_path).instantiate() as BaseItem
+	item.queue_free()
+	
+	for i in i_data:
+		if new_item.i_data.has(i):
+			new_item.i_data[i] = i_data[i]
+	i_data.clear()
+	
+	get_tree().current_scene.add_child(new_item, true)
+	
+	new_item.global_position = item_holder.global_position
+	new_item.rotation_degrees = Vector3.ZERO
+	
+	if throw:
+		new_item.throw(-camera.global_transform.basis.z * throw_force)
+		await get_tree().create_timer(0.25).timeout
+		interaction_area.get_child(0).disabled = false
 
 func throw():
 	interaction_area.get_child(0).disabled = true
-	var obj = object
-	drop_object()
-	
-	obj.throw(-camera.global_transform.basis.z * throw_force)
-	await get_tree().create_timer(0.25).timeout
-	interaction_area.get_child(0).disabled = false
+	drop_object(true)
 
 func handle_movement(delta):
 	if was_climbing: return
