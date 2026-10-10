@@ -65,10 +65,9 @@ func is_held() -> bool:
 	else: return false
 
 @rpc("authority", "call_local", "unreliable")
-func pick_up(picked_up_by):
+func pick_up(path):
 	ignore_gravity = true
-	print(picked_up_by)
-	item_holder = picked_up_by
+	item_holder = get_node(path)
 	
 	#reparent(picked_up_by.item_holder, false)
 	
@@ -78,7 +77,7 @@ func pick_up(picked_up_by):
 	queue_free()
 
 @rpc("authority", "call_local", "unreliable")
-func use(controller: Node3D):
+func use(path):
 	uses += 1
 
 @rpc("authority", "call_local", "unreliable")

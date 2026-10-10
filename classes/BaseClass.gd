@@ -412,7 +412,7 @@ func handle_interaction():
 			var body = interaction_area.get_overlapping_bodies().front()
 			var body_path = body.get_scene_file_path()
 			mp_spawner.add_spawnable_scene(body_path)
-			body.pick_up.rpc(self)
+			body.pick_up.rpc(self.get_path())
 			
 			await !i_data.is_empty()
 			
@@ -432,7 +432,7 @@ func handle_interaction():
 	#use item in hand
 	if is_multiplayer_authority() and Input.is_action_just_pressed("interact"):
 		if item and item.has_method("use"):
-			item.use.rpc(self)
+			item.use.rpc(self.get_path())
 	
 	#throw
 	if is_multiplayer_authority() and Input.is_action_just_pressed("throw"):
