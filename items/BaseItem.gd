@@ -64,6 +64,7 @@ func is_held() -> bool:
 	if item_holder != null: return true
 	else: return false
 
+@rpc("authority", "call_local", "unreliable")
 func pick_up(picked_up_by):
 	ignore_gravity = true
 	print(picked_up_by)
@@ -76,9 +77,11 @@ func pick_up(picked_up_by):
 	update_i_data(i_data)
 	queue_free()
 
+@rpc("authority", "call_local", "unreliable")
 func use(controller: Node3D):
 	uses += 1
 
+@rpc("authority", "call_local", "unreliable")
 func throw(throw_dir: Vector3):
 	ignore_gravity = ignore_gravity_when_dropped
 	velocity = throw_dir

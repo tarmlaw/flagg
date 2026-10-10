@@ -412,7 +412,7 @@ func handle_interaction():
 			var body = interaction_area.get_overlapping_bodies().front()
 			var body_path = body.get_scene_file_path()
 			mp_spawner.add_spawnable_scene(body_path)
-			body.pick_up(self)
+			body.pick_up.rpc(self)
 			
 			await !i_data.is_empty()
 			
@@ -432,7 +432,7 @@ func handle_interaction():
 	#use item in hand
 	if is_multiplayer_authority() and Input.is_action_just_pressed("interact"):
 		if item and item.has_method("use"):
-			item.use(self)
+			item.use.rpc(self)
 	
 	#throw
 	if is_multiplayer_authority() and Input.is_action_just_pressed("throw"):
@@ -455,7 +455,7 @@ func drop_object(throw: bool = false):
 	new_item.rotation_degrees = Vector3.ZERO
 	
 	if throw:
-		new_item.throw(-camera.global_transform.basis.z * throw_force)
+		new_item.throw.rpc(-camera.global_transform.basis.z * throw_force)
 		await get_tree().create_timer(0.25).timeout
 		interaction_area.get_child(0).disabled = false
 	

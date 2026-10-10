@@ -121,6 +121,9 @@ properties/8/replication_mode = 1
 properties/9/path = NodePath(".:item")
 properties/9/spawn = true
 properties/9/replication_mode = 1
+properties/10/path = NodePath("MultiplayerSpawner:_spawnable_scene_count")
+properties/10/spawn = true
+properties/10/replication_mode = 1
 
 [node name="goblin" type="CharacterBody3D" unique_id=1912487018 node_paths=PackedStringArray("pivot", "camera", "look_at_mod", "ui", "hurtbox", "status_effect_handler", "state_machine", "item_holder", "interaction_area", "knockback_timer", "stair_ahead_ray", "stair_below_ray", "nav_agent", "anim", "audio_listener", "meshes_to_hide", "visibility_notifier", "coll", "mp_spawner", "debug_label") groups=["entity"]]
 collision_layer = 4
@@ -354,7 +357,6 @@ replication_config = SubResource("SceneReplicationConfig_awgpw")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1486296832]
 spawn_path = NodePath("../model/Armature/Skeleton3D/BoneAttachment3D/item holder")
-spawn_limit = 1
 
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
 
