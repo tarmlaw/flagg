@@ -407,7 +407,7 @@ func handle_interaction():
 	if !item and interaction_area.has_overlapping_bodies():
 		if is_multiplayer_authority() and interaction_area.get_overlapping_bodies().front() is BaseItem:
 			
-			pickup_object.rpc(interaction_area.get_overlapping_bodies().front().get_scene_file_path(), interaction_area.get_overlapping_bodies().front())
+			pickup_object.rpc(interaction_area.get_overlapping_bodies().front().get_scene_file_path(), interaction_area.get_overlapping_bodies().front().get_path())
 			#Net.send_packet(0, {"message": "itempickup", "itempath": Global.steam_name, "playerpath":self.get_path(), "user_id": Global.steam_id})
 	
 	if item: item.position = Vector3.ZERO
@@ -423,17 +423,19 @@ func handle_interaction():
 			throw()
 
 @rpc("authority", "call_local", "unreliable")
-func pickup_object(item_path, i_data_transfer_source: BaseItem):
+func pickup_object(item_file_path, item_path: NodePath):
+	interaction_area.get_child(0).disabled = true
+	
 	i_data.clear()
 	mp_spawner.clear_spawnable_scenes()
-	mp_spawner.add_spawnable_scene(item_path)
+	mp_spawner.add_spawnable_scene(item_file_path)
 	
-	if i_data_transfer_source:
-		i_data_transfer_source.pick_up.rpc(self.get_path())
+	if get_node(item_path):
+		get_node(item_path).pick_up.rpc(self.get_path())
 	
 		await !i_data.is_empty()
 		
-		var new_item = load(item_path).instantiate() as BaseItem
+		var new_item = load(item_file_path).instantiate() as BaseItem
 		new_item.name = new_item.item_name
 		item_holder.add_child(new_item, true)
 		item = new_item
@@ -443,11 +445,12 @@ func pickup_object(item_path, i_data_transfer_source: BaseItem):
 			if item.i_data.has(i):
 				item.i_data[i] = i_data[i]
 		
-		ui.display_text(str("PICKED UP ", i_data_transfer_source.item_name))
+		interaction_area.get_child(0).disabled = false
+		ui.display_text(str("PICKED UP ", get_node(item_path).item_name))
 
 func drop_object(throw: bool = false):
-	var item_path = item.get_scene_file_path()
-	var new_item = load(item_path).instantiate() as BaseItem
+	var item_file_path = item.get_scene_file_path()
+	var new_item = load(item_file_path).instantiate() as BaseItem
 	item.queue_free()
 	
 	for i in i_data:

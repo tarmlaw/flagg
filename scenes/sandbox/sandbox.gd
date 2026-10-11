@@ -34,6 +34,7 @@ func init_player(player: BaseClass):
 	players.append(player)
 
 func _on_host_pressed() -> void:
+	$CanvasLayer/host.disabled = true
 	Net.host_lobby()
 	Net.send_packet(0, {"message": "hosting lobby", "user_name": Global.steam_name})
 
