@@ -144,6 +144,9 @@ func read_packet():
 				
 				"startgame":
 					Global.start_game(r_data["map"])
+				
+				"itempickup":
+					pass
 
 func send_packet(target: int, packet_data: Dictionary):
 	var send_type: int = Steam.P2P_SEND_RELIABLE

@@ -405,27 +405,10 @@ func handle_interaction():
 	
 	# item pick up
 	if !item and interaction_area.has_overlapping_bodies():
-		if interaction_area.get_overlapping_bodies().front() is BaseItem:
-			i_data.clear()
-			mp_spawner.clear_spawnable_scenes()
+		if is_multiplayer_authority() and interaction_area.get_overlapping_bodies().front() is BaseItem:
 			
-			var body = interaction_area.get_overlapping_bodies().front()
-			var body_path = body.get_scene_file_path()
-			mp_spawner.add_spawnable_scene(body_path)
-			body.pick_up.rpc(self.get_path())
-			
-			await !i_data.is_empty()
-			
-			var new_item = load(body_path).instantiate() as BaseItem
-			item_holder.add_child(new_item, true)
-			item = new_item
-			item.item_holder = self
-			
-			for i in i_data:
-				if item.i_data.has(i):
-					item.i_data[i] = i_data[i]
-			
-			ui.display_text(str("PICKED UP ", body.item_name))
+			pickup_object.rpc(interaction_area.get_overlapping_bodies().front().get_scene_file_path(), interaction_area.get_overlapping_bodies().front())
+			#Net.send_packet(0, {"message": "itempickup", "itempath": Global.steam_name, "playerpath":self.get_path(), "user_id": Global.steam_id})
 	
 	if item: item.position = Vector3.ZERO
 	
@@ -438,6 +421,29 @@ func handle_interaction():
 	if is_multiplayer_authority() and Input.is_action_just_pressed("throw"):
 		if item:
 			throw()
+
+@rpc("authority", "call_local", "unreliable")
+func pickup_object(item_path, i_data_transfer_source: BaseItem):
+	i_data.clear()
+	mp_spawner.clear_spawnable_scenes()
+	mp_spawner.add_spawnable_scene(item_path)
+	
+	if i_data_transfer_source:
+		i_data_transfer_source.pick_up.rpc(self.get_path())
+	
+		await !i_data.is_empty()
+		
+		var new_item = load(item_path).instantiate() as BaseItem
+		new_item.name = new_item.item_name
+		item_holder.add_child(new_item, true)
+		item = new_item
+		item.item_holder = self
+		
+		for i in i_data:
+			if item.i_data.has(i):
+				item.i_data[i] = i_data[i]
+		
+		ui.display_text(str("PICKED UP ", i_data_transfer_source.item_name))
 
 func drop_object(throw: bool = false):
 	var item_path = item.get_scene_file_path()
