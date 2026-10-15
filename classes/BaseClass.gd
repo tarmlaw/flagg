@@ -424,6 +424,7 @@ func handle_interaction():
 
 @rpc("authority", "call_local", "unreliable")
 func pickup_object(item_file_path, item_path: NodePath):
+	print(name)
 	interaction_area.get_child(0).disabled = true
 	
 	i_data.clear()
