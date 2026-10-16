@@ -116,7 +116,6 @@ shape = SubResource("BoxShape3D_nh68t")
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=634020241]
 _spawnable_scenes = PackedStringArray("uid://cvnh4k0lvohpd")
 spawn_path = NodePath("..")
-spawn_limit = 1
 
 [connection signal="pressed" from="CanvasLayer/host" to="." method="_on_host_pressed"]
 [connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]

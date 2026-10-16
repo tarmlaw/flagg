@@ -18,7 +18,7 @@ var uses: int = 0:
 @export var delete_on_use: bool = true
 
 @export var i_data: Dictionary #only use variable with a SET function (item name, max uses, uses)
-var item_holder = null
+var item_holder: BaseClass = null
 
 # MOVEMENT
 @export_category("Movement")
@@ -52,8 +52,13 @@ func _process(delta: float) -> void:
 	handle_rotation(delta)
 
 func _physics_process(delta: float) -> void:
-	if is_held(): coll.disabled = true
-	else: coll.disabled = false
+	if is_held():
+		ignore_gravity = true
+		coll.disabled = true
+	else:
+		if !ignore_gravity_when_dropped: ignore_gravity = false
+		else: ignore_gravity = true
+		coll.disabled = false
 	
 	handle_decceleration(delta)
 	handle_gravity(delta)
@@ -65,16 +70,13 @@ func is_held() -> bool:
 	else: return false
 
 @rpc("authority", "call_local", "unreliable")
-func pick_up(path):
+func pickup():
 	ignore_gravity = true
-	item_holder = get_node(path)
-	
-	#reparent(picked_up_by.item_holder, false)
+	item_holder = get_parent()
 	
 	await is_held()
 	
 	update_i_data(i_data)
-	queue_free()
 
 @rpc("authority", "call_local", "unreliable")
 func use(path):

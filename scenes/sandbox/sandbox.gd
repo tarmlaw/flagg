@@ -1,13 +1,16 @@
 extends Node3D
+class_name Map
 
 @onready var mp_spawner: MultiplayerSpawner = $MultiplayerSpawner
+
 
 var goblin = preload("res://classes/goblin/goblin.tscn")
 var players: Array[BaseClass]
 
-
 func _ready() -> void:
 	Net.host_created.connect(on_host_created)
+	Game.mp_spawner = mp_spawner
+	
 	mp_spawner.add_spawnable_scene("res://items/shark energy/shark energy.tscn")
 
 func _process(delta: float) -> void:

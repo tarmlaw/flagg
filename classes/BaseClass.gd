@@ -206,6 +206,7 @@ func display_debug():
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
+	Game.set_multiplayer_authority(get_multiplayer_authority())
 
 func _ready() -> void:
 	if !is_multiplayer_authority(): return
@@ -398,82 +399,147 @@ func change_state(new_state: String):
 	current_state = state_machine.get_node(new_state)
 	if current_state: current_state.enter_state(self)
 
+#region interaction
+# L: local, R: remote
+# when L walks onto an item
+	# L despawns old item, synced to R
+	# L tells LR Game to spawn new item
+		# LR Game updates spawner to sync tree
+		# item data is synced by L Game, synced to R on spawn
+		# item is spawned by L Game, synced to R
+	# once item item is spawned
+		# L item syncs position, rotation...
+
 func handle_interaction():
-	if !can_pick_up:
-		if item: throw()
-		return
-	
 	# item pick up
 	if !item and interaction_area.has_overlapping_bodies():
 		if is_multiplayer_authority() and interaction_area.get_overlapping_bodies().front() is BaseItem:
-			
-			pickup_object.rpc(interaction_area.get_overlapping_bodies().front().get_scene_file_path(), interaction_area.get_overlapping_bodies().front().get_path())
-			#Net.send_packet(0, {"message": "itempickup", "itempath": Global.steam_name, "playerpath":self.get_path(), "user_id": Global.steam_id})
+			interaction_area.get_child(0).disabled = true
+			pickup_item(interaction_area.get_overlapping_bodies().front())
 	
+	# drop item
+	
+	## throw item
+	#if is_multiplayer_authority() and Input.is_action_just_pressed("throw"):
+		#if item:
+			#throw_item()
+	
+	# misc
 	if item: item.position = Vector3.ZERO
+
+func pickup_item(new_item: BaseItem):
+	var temp_file_path = new_item.get_scene_file_path()
+	var temp_i_data = new_item.i_data
+	var temp_node_path = item_holder.get_path()
 	
-	#use item in hand
-	if is_multiplayer_authority() and Input.is_action_just_pressed("interact"):
-		if item and item.has_method("use"):
-			item.use.rpc(self.get_path())
+	new_item.queue_free()
+	Game.spawn_item.rpc(temp_file_path, temp_i_data, temp_node_path, self.get_path())
 	
-	#throw
-	if is_multiplayer_authority() and Input.is_action_just_pressed("throw"):
-		if item:
-			throw()
+	await item
+	interaction_area.get_child(0).disabled = false
 
 @rpc("authority", "call_local", "unreliable")
-func pickup_object(item_file_path, item_path: NodePath):
-	print(name)
+func drop_item(throw: bool = false):
+	# despawn current item
+	# tell Game to respawn it with a specific position
 	interaction_area.get_child(0).disabled = true
 	
-	i_data.clear()
-	mp_spawner.clear_spawnable_scenes()
-	mp_spawner.add_spawnable_scene(item_file_path)
-	
-	if get_node(item_path):
-		get_node(item_path).pick_up.rpc(self.get_path())
-	
-		await !i_data.is_empty()
-		
-		var new_item = load(item_file_path).instantiate() as BaseItem
-		new_item.name = new_item.item_name
-		item_holder.add_child(new_item, true)
-		item = new_item
-		item.item_holder = self
-		
-		for i in i_data:
-			if item.i_data.has(i):
-				item.i_data[i] = i_data[i]
-		
-		interaction_area.get_child(0).disabled = false
-		ui.display_text(str("PICKED UP ", get_node(item_path).item_name))
-
-func drop_object(throw: bool = false):
 	var item_file_path = item.get_scene_file_path()
-	var new_item = load(item_file_path).instantiate() as BaseItem
 	item.queue_free()
 	
-	for i in i_data:
-		if new_item.i_data.has(i):
-			new_item.i_data[i] = i_data[i]
-	i_data.clear()
+	if is_multiplayer_authority():
+		Game.spawn_item(item_file_path, i_data, get_parent().get_path(), "", item_holder.global_position, Vector3.ZERO, throw, -camera.global_transform.basis.z * throw_force)
 	
-	get_tree().current_scene.add_child(new_item, true)
-	
-	new_item.global_position = item_holder.global_position
-	new_item.rotation_degrees = Vector3.ZERO
-	
-	if throw:
-		new_item.throw.rpc(-camera.global_transform.basis.z * throw_force)
-		await get_tree().create_timer(0.25).timeout
-		interaction_area.get_child(0).disabled = false
-	
-	mp_spawner.clear_spawnable_scenes()
+	await get_tree().create_timer(0.25).timeout
+	interaction_area.get_child(0).disabled = false
 
-func throw():
+@rpc("authority", "call_local", "unreliable")
+func throw_item():
 	interaction_area.get_child(0).disabled = true
-	drop_object(true)
+	drop_item.rpc_id(get_multiplayer_authority(), true)
+
+func use_item():
+	pass
+#endregion interaction
+
+##region interaction
+#func handle_interaction():
+	#if !can_pick_up:
+		#if item: throw()
+		#return
+	#
+	## item pick up
+	#if !item and interaction_area.has_overlapping_bodies():
+		#if is_multiplayer_authority() and interaction_area.get_overlapping_bodies().front() is BaseItem:
+			#
+			#pickup_object.rpc(interaction_area.get_overlapping_bodies().front().get_scene_file_path(), interaction_area.get_overlapping_bodies().front().get_path())
+			##Net.send_packet(0, {"message": "itempickup", "itempath": Global.steam_name, "playerpath":self.get_path(), "user_id": Global.steam_id})
+	#
+	#if item: item.position = Vector3.ZERO
+	#
+	##use item in hand
+	#if is_multiplayer_authority() and Input.is_action_just_pressed("interact"):
+		#if item and item.has_method("use"):
+			#item.use.rpc(self.get_path())
+	#
+	##throw
+	#if is_multiplayer_authority() and Input.is_action_just_pressed("throw"):
+		#if item:
+			#throw()
+#
+#@rpc("authority", "call_local", "unreliable")
+#func pickup_object(item_file_path, item_path: NodePath):
+	#print(name)
+	#interaction_area.get_child(0).disabled = true
+	#
+	#i_data.clear()
+	#mp_spawner.clear_spawnable_scenes()
+	#mp_spawner.add_spawnable_scene(item_file_path)
+	#
+	#if get_node(item_path):
+		#get_node(item_path).pick_up.rpc(self.get_path())
+	#
+		#await !i_data.is_empty()
+		#
+		#var new_item = load(item_file_path).instantiate() as BaseItem
+		#new_item.name = new_item.item_name
+		#item_holder.add_child(new_item, true)
+		#item = new_item
+		#item.item_holder = self
+		#
+		#for i in i_data:
+			#if item.i_data.has(i):
+				#item.i_data[i] = i_data[i]
+		#
+		#interaction_area.get_child(0).disabled = false
+		#ui.display_text(str("PICKED UP ", get_node(item_path).item_name))
+#
+#func drop_object(throw: bool = false):
+	#var item_file_path = item.get_scene_file_path()
+	#var new_item = load(item_file_path).instantiate() as BaseItem
+	#item.queue_free()
+	#
+	#for i in i_data:
+		#if new_item.i_data.has(i):
+			#new_item.i_data[i] = i_data[i]
+	#i_data.clear()
+	#
+	#get_tree().current_scene.add_child(new_item, true)
+	#
+	#new_item.global_position = item_holder.global_position
+	#new_item.rotation_degrees = Vector3.ZERO
+	#
+	#if throw:
+		#new_item.throw.rpc(-camera.global_transform.basis.z * throw_force)
+		#await get_tree().create_timer(0.25).timeout
+		#interaction_area.get_child(0).disabled = false
+	#
+	#mp_spawner.clear_spawnable_scenes()
+#
+#func throw():
+	#interaction_area.get_child(0).disabled = true
+	#drop_object(true)
+##endregion interaction
 
 func handle_movement(delta):
 	if was_climbing: return

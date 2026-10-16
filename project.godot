@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Global="*uid://c8mafl8mdy00d"
 Net="*uid://da2x8rq245e4f"
+Game="*uid://cf5gpklltqsxx"
 
 [display]
 
